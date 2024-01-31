@@ -113,6 +113,12 @@ void Game::Initialize(HWND _window, int _width, int _height)
     cube->SetScale(4.0f);
     m_GameObjects.push_back(cube);
 
+    VBCube* cube2 = new VBCube();
+    cube2->init(11, m_d3dDevice.Get());
+    cube2->SetPos(Vector3(50.0f, 0.0f, 0.0f));
+    cube2->SetScale(10.0f);
+    m_GameObjects.push_back(cube2);
+
     VBSpike* spikes = new VBSpike();
     spikes->init(11, m_d3dDevice.Get());
     spikes->SetPos(Vector3(0.0f, 0.0f, 100.0f));
