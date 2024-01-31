@@ -156,7 +156,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(m_cam);
 
     //add Player
-    Player* pPlayer = new Player("BirdModelV1", m_d3dDevice.Get(), m_fxFactory);
+    Player* pPlayer = new Player("Car", m_d3dDevice.Get(), m_fxFactory);
     m_GameObjects.push_back(pPlayer);
 
     //add a secondary camera

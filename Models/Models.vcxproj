@@ -156,6 +156,9 @@
     <MeshContentTask Include="Vase\JEMINA vase -up.fbx">
       <FileType>Document</FileType>
     </MeshContentTask>
+    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\J2-silvester\Windows\Downloads\am7f3psa0agw-Car-Model\Car-Model\Car.fbx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </MeshContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
