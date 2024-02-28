@@ -113,6 +113,12 @@ void Game::Initialize(HWND _window, int _width, int _height)
     cube->SetScale(4.0f);
     m_GameObjects.push_back(cube);
 
+    FileVBGO* House = new FileVBGO("House 01 FBX", m_d3dDevice.Get());
+    m_GameObjects.push_back(House);
+    Box->SetPos(Vector3(20.0f, 20.0f, -100.0f));
+    Box->SetPitch(XM_PIDIV4);
+    Box->SetScale(20.0f);
+
     //create a base camera
     m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
     m_cam->SetPos(Vector3(0.0f, 200.0f, 200.0f));
@@ -152,8 +158,8 @@ void Game::Initialize(HWND _window, int _width, int _height)
     loop->Play();
     m_Sounds.push_back(loop);
 
-    TestSound* TS = new TestSound(m_audioEngine.get(), "CarStart");
-    m_Sounds.push_back(TS);
+  /*  TestSound* TS = new TestSound(m_audioEngine.get(), "CarStart");
+    m_Sounds.push_back(TS);*/
 }
 
 // Executes the basic game loop.
