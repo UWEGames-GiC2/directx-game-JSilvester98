@@ -161,6 +161,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
   </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\ROAD.obj">
+      <FileType>Document</FileType>
+    </MeshContentTask>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\MeshContentTask.targets" />
