@@ -150,19 +150,10 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Bird\BirdModelV1.fbx" />
-    <MeshContentTask Include="House 01 FBX.fbx" />
     <MeshContentTask Include="Table\table.FBX">
       <FileType>Document</FileType>
     </MeshContentTask>
     <MeshContentTask Include="Vase\JEMINA vase -up.fbx">
-      <FileType>Document</FileType>
-    </MeshContentTask>
-    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\J2-silvester\Windows\Downloads\am7f3psa0agw-Car-Model\Car-Model\Car.fbx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\ROAD.obj">
       <FileType>Document</FileType>
     </MeshContentTask>
   </ItemGroup>

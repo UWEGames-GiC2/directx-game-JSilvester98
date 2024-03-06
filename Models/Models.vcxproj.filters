@@ -20,8 +20,5 @@
     <MeshContentTask Include="Vase\JEMINA vase -up.fbx" />
     <MeshContentTask Include="Table\table.FBX" />
     <MeshContentTask Include="Bird\BirdModelV1.fbx" />
-    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\J2-silvester\Windows\Downloads\am7f3psa0agw-Car-Model\Car-Model\Car.fbx" />
-    <MeshContentTask Include="House 01 FBX.fbx" />
-    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\ROAD.obj" />
   </ItemGroup>
 </Project>

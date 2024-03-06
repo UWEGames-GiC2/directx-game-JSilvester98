@@ -5,7 +5,4 @@
     <ImageContentTask Include="grass.jpg" />
     <ImageContentTask Include="white.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\READ_ME.txt" />
-  </ItemGroup>
 </Project>
