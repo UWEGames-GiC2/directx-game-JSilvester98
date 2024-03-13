@@ -54,6 +54,7 @@ public:
 	void		SetPhysicsOn(bool _physics) { m_physicsOn = _physics; }
 	void		TogglePhysics() { m_physicsOn = !m_physicsOn; }
 	void		SetDrag(float _drag) { m_drag = _drag; }
+	void		SetAcc(Vector3 _acc) { m_acc = _acc; }
 
 protected:
 
@@ -70,6 +71,7 @@ protected:
 	float m_drag = 0.0f;
 	Vector3 m_vel = Vector3::Zero;
 	Vector3 m_acc = Vector3::Zero;
+	Vector3 m_grav = Vector3(0, -98.0f, 0);
 };
 
 #endif

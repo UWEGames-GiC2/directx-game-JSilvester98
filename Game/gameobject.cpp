@@ -13,6 +13,7 @@ GameObject::GameObject()
 
 	m_worldMat = Matrix::Identity;
 	m_fudge = Matrix::Identity;
+
 }
 
 GameObject::~GameObject()
@@ -29,6 +30,7 @@ void GameObject::Tick(GameData* _GD)
 
 		m_vel = newVel;
 		m_pos = newPos;
+
 	}
 
 	//build up the world matrix depending on the new position of the GameObject

@@ -10,7 +10,7 @@ Player::Player(string _fileName, ID3D11Device* _pd3dDevice, IEffectFactory* _EF)
 
 	m_pos.y = 10.0f;
 
-	SetDrag(0.7);
+	SetDrag(0.1);
 	SetPhysicsOn(true);
 }
 
@@ -28,7 +28,7 @@ void Player::Tick(GameData* _GD)
 	{
 		{
 			//MOUSE CONTROL SCHEME HERE
-			float speed = 10.0f;
+			float speed = 100.0f;
 			m_acc.x += speed * _GD->m_MS.x;
 			m_acc.z += speed * _GD->m_MS.y;
 			break;
@@ -84,6 +84,9 @@ void Player::Tick(GameData* _GD)
 		m_vel *= -0.9; //VERY simple bounce back
 	}
 
+	m_acc += Vector3(m_grav);
+
 	//apply my base behaviour
 	CMOGO::Tick(_GD);
+
 }
