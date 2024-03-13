@@ -86,7 +86,13 @@ void Player::Tick(GameData* _GD)
 
 	m_acc += Vector3(m_grav);
 
+	if (m_pos.y < 0)
+	{
+		//m_grav = Vector3(0, 0, 0);
+		m_acc.y = 0;
+		m_pos.y = 0;
+	}
+
 	//apply my base behaviour
 	CMOGO::Tick(_GD);
-
 }

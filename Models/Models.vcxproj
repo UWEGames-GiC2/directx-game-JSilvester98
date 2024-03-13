@@ -151,15 +151,11 @@
   <ItemGroup>
     <MeshContentTask Include="Bird\BirdModelV1.fbx" />
     <MeshContentTask Include="Car\car.FBX" />
+    <MeshContentTask Include="Road\ROAD.fbx" />
     <MeshContentTask Include="Table\table.FBX">
       <FileType>Document</FileType>
     </MeshContentTask>
     <MeshContentTask Include="Vase\JEMINA vase -up.fbx">
-      <FileType>Document</FileType>
-    </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <MeshContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\ROAD.obj">
       <FileType>Document</FileType>
     </MeshContentTask>
   </ItemGroup>

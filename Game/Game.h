@@ -68,6 +68,8 @@ private:
     void CreateDevice();
     void CreateResources();
 
+    void Grounded();
+
     void OnDeviceLost();
 
     // Device resources.

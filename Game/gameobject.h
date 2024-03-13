@@ -71,7 +71,7 @@ protected:
 	float m_drag = 0.0f;
 	Vector3 m_vel = Vector3::Zero;
 	Vector3 m_acc = Vector3::Zero;
-	Vector3 m_grav = Vector3(0, -98.0f, 0);
+	Vector3 m_grav = Vector3(0, -9.8f, 0);
 };
 
 #endif

@@ -101,11 +101,34 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(terrain);
     m_ColliderObjects.push_back(terrain);*/
 
-    Terrain* terrain2 = new Terrain("ROAD", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, -500.0f, 0.0f), 0.0f, 0.0f, 0.0f, Vector3::One);
+    Terrain* terrain2 = new Terrain("ROAD", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, Vector3::One);
     m_GameObjects.push_back(terrain2);
     m_ColliderObjects.push_back(terrain2);
-    terrain2->SetScale(0.5f);
+    terrain2->SetScale(0.1f);
     
+    FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
+    m_GameObjects.push_back(Box);
+    Box->SetPos(Vector3(0.0f, 0.0f, -100.0f));
+    Box->SetScale(1.0f, 20.0f, 20.0f);
+
+    //add Player
+    Player* pPlayer = new Player("car", m_d3dDevice.Get(), m_fxFactory);
+    m_GameObjects.push_back(pPlayer);
+    m_PhysicsObjects.push_back(pPlayer);
+    pPlayer->SetScale(2.0f);
+    pPlayer->SetYaw(90.0f);
+
+    //create a base camera
+    m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
+    m_cam->SetPos(Vector3(200.0f, 200.0f, 200.0f));
+    m_GameObjects.push_back(m_cam);
+
+    //add a secondary camera
+    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 30.0f, 60.0f));
+    m_GameObjects.push_back(m_TPScam);
+
+
+
 
     //L-system like tree
    /* Tree* tree = new Tree(4, 4, .6f, 10.0f * Vector3::Up, XM_PI / 6.0f, "JEMINA vase -up", m_d3dDevice.Get(), m_fxFactory);
@@ -116,11 +139,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //FileVBGO* terrainBox = new FileVBGO("terrainTex", m_d3dDevice.Get());
     //m_GameObjects.push_back(terrainBox);
 
-    //FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
-    //m_GameObjects.push_back(Box);
-    //Box->SetPos(Vector3(0.0f, 0.0f, -100.0f));
-    //Box->SetPitch(XM_PIDIV4);
-    //Box->SetScale(20.0f);
 
     //VBCube* cube = new VBCube();
     //cube->init(11, m_d3dDevice.Get());
@@ -159,22 +177,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //VBMC->SetScale(Vector3(3, 3, 1.5));
     //m_GameObjects.push_back(VBMC);
 
-    //create a base camera
-    m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
-    m_cam->SetPos(Vector3(200.0f, 200.0f, 200.0f));
-    m_GameObjects.push_back(m_cam);
-
-    //add Player
-    Player* pPlayer = new Player("car", m_d3dDevice.Get(), m_fxFactory);
-    m_GameObjects.push_back(pPlayer);
-    m_PhysicsObjects.push_back(pPlayer);
-    pPlayer->SetScale(5.0f);
-    pPlayer->SetYaw(90.0f);
-
-
-    //add a secondary camera
-    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 100.0f, 200.0f));
-    m_GameObjects.push_back(m_TPScam);
 
     //test all GPGOs
     /*float* params = new float[3];
@@ -316,8 +318,14 @@ void Game::Update(DX::StepTimer const& _timer)
         (*it)->Tick(m_GD);
     }
 
+    
     CheckCollision();
 }
+
+//void Game::Grounded()
+//{
+//    
+//}
 
 // Draws the scene.
 void Game::Render()
