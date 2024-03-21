@@ -28,6 +28,8 @@ public:
 	BoundingOrientedBox&		getCollider()		noexcept { return m_collider; }
 	const BoundingOrientedBox&	getCollider() const noexcept { return m_collider; }
 
+	void Grounded();
+
 protected:
 	unique_ptr<Model>  m_model;
 	BoundingOrientedBox m_collider;

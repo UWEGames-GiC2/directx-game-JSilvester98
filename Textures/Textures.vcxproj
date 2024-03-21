@@ -150,6 +150,9 @@
     <ImageContentTask Include="grass.jpg" />
     <ImageContentTask Include="white.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\C++Background.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

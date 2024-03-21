@@ -12,6 +12,8 @@
 #include "Mouse.h"
 #include "Audio.h"
 #include "CMOGO.h"
+#include "ObjectList.h"
+
 
 using std::list;
 
@@ -68,7 +70,9 @@ private:
     void CreateDevice();
     void CreateResources();
 
-    void Grounded();
+
+    ImageGO2D*menuImg;
+    
 
     void OnDeviceLost();
 

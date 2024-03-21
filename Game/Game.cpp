@@ -30,6 +30,7 @@ Game::Game() noexcept :
     m_outputWidth(800),
     m_outputHeight(600),
     m_featureLevel(D3D_FEATURE_LEVEL_11_0)
+    
 {
 }
 
@@ -65,7 +66,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //create GameData struct and populate its pointers
     m_GD = new GameData;
-    m_GD->m_GS = GS_PLAY_MAIN_CAM;
+    m_GD->m_GS = GS_MENU;
 
     //set up systems for 2D rendering
     m_DD2D = new DrawData2D();
@@ -101,31 +102,37 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(terrain);
     m_ColliderObjects.push_back(terrain);*/
 
-    Terrain* terrain2 = new Terrain("ROAD", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, Vector3::One);
+    /*Terrain* terrain2 = new Terrain("ROAD", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, Vector3::One);
     m_GameObjects.push_back(terrain2);
     m_ColliderObjects.push_back(terrain2);
-    terrain2->SetScale(0.1f);
+    terrain2->SetScale(0.1f);*/
     
-    FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
+    /*FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
     m_GameObjects.push_back(Box);
     Box->SetPos(Vector3(0.0f, 0.0f, -100.0f));
-    Box->SetScale(1.0f, 20.0f, 20.0f);
+    Box->SetScale(1.0f, 20.0f, 20.0f);*/
 
     //add Player
     Player* pPlayer = new Player("car", m_d3dDevice.Get(), m_fxFactory);
     m_GameObjects.push_back(pPlayer);
     m_PhysicsObjects.push_back(pPlayer);
-    pPlayer->SetScale(2.0f);
+    pPlayer->SetScale(15.0f);
     pPlayer->SetYaw(90.0f);
 
     //create a base camera
     m_cam = new Camera(0.25f * XM_PI, AR, 1.0f, 10000.0f, Vector3::UnitY, Vector3::Zero);
-    m_cam->SetPos(Vector3(200.0f, 200.0f, 200.0f));
+    m_cam->SetPos(Vector3(20.0f, 20.0f, 20.0f));
     m_GameObjects.push_back(m_cam);
 
     //add a secondary camera
-    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 30.0f, 60.0f));
+    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, 10.0f));
     m_GameObjects.push_back(m_TPScam);
+
+    VBCube* cube = new VBCube();
+    cube->init(11, m_d3dDevice.Get());
+    cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
+    cube->SetScale(400.0f, 0.001f, 400.0f);
+    m_GameObjects.push_back(cube);
 
 
 
@@ -139,12 +146,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //FileVBGO* terrainBox = new FileVBGO("terrainTex", m_d3dDevice.Get());
     //m_GameObjects.push_back(terrainBox);
 
-
-    //VBCube* cube = new VBCube();
-    //cube->init(11, m_d3dDevice.Get());
-    //cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
-    //cube->SetScale(4.0f);
-    //m_GameObjects.push_back(cube);
 
     //VBSpike* spikes = new VBSpike();
     //spikes->init(11, m_d3dDevice.Get());
@@ -237,10 +238,11 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_DD->m_light = m_light;
 
     //example basic 2D stuff
-    /*ImageGO2D* logo = new ImageGO2D("logo_small", m_d3dDevice.Get());
-    logo->SetPos(200.0f * Vector2::One);
-    m_GameObjects2D.push_back(logo);
-    ImageGO2D* bug_test = new ImageGO2D("bug_test", m_d3dDevice.Get());
+    menuImg = new ImageGO2D("C++Background", m_d3dDevice.Get());
+    menuImg->SetPos(200.0f * Vector2::One);
+    m_GameObjects2D.push_back(menuImg);
+
+   /* ImageGO2D* bug_test = new ImageGO2D("bug_test", m_d3dDevice.Get());
     bug_test->SetPos(300.0f * Vector2::One);
     m_GameObjects2D.push_back(bug_test);*/
 
@@ -250,13 +252,13 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects2D.push_back(text);*/
 
     //Test Sounds
-    Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
+    /*Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
     loop->SetVolume(0.1f);
     loop->Play();
     m_Sounds.push_back(loop);
 
     TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
-    m_Sounds.push_back(TS);
+    m_Sounds.push_back(TS);*/
 }
 
 // Executes the basic game loop.
@@ -298,13 +300,9 @@ void Game::Update(DX::StepTimer const& _timer)
     //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
     if (m_GD->m_KBS_tracker.pressed.Space)
     {
-        if (m_GD->m_GS == GS_PLAY_MAIN_CAM)
+        if (m_GD->m_GS == GS_MENU)
         {
             m_GD->m_GS = GS_PLAY_TPS_CAM;
-        }
-        else
-        {
-            m_GD->m_GS = GS_PLAY_MAIN_CAM;
         }
     }
 
@@ -340,6 +338,16 @@ void Game::Render()
     
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
+
+    switch (m_GD->m_GS)
+    {
+    case GS_MENU:
+        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+        menuImg->Draw(m_DD2D);
+
+        m_DD2D->m_Sprites->End();
+        break;
+    }
 
     //set which camera to be used
     m_DD->m_cam = m_cam;
