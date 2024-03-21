@@ -19,6 +19,8 @@ public:
 	virtual void Draw(DrawData2D* _DD);
 protected:
 
+	bool imgVisable = true;
+
 	ID3D11ShaderResourceView* m_pTextureRV;
 };
 

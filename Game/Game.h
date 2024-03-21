@@ -71,7 +71,7 @@ private:
     void CreateResources();
 
 
-    ImageGO2D*menuImg;
+    GameObject2D*menuImg;
     
 
     void OnDeviceLost();

@@ -125,13 +125,13 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(m_cam);
 
     //add a secondary camera
-    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, 10.0f));
+    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, -10.0f));
     m_GameObjects.push_back(m_TPScam);
 
     VBCube* cube = new VBCube();
     cube->init(11, m_d3dDevice.Get());
     cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
-    cube->SetScale(400.0f, 0.001f, 400.0f);
+    cube->SetScale(20.0f, 0.001f, 20.0f);
     m_GameObjects.push_back(cube);
 
 
@@ -239,7 +239,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     //example basic 2D stuff
     menuImg = new ImageGO2D("C++Background", m_d3dDevice.Get());
-    menuImg->SetPos(200.0f * Vector2::One);
+    menuImg->SetPos(Vector2(_width / 2, _height / 2));
     m_GameObjects2D.push_back(menuImg);
 
    /* ImageGO2D* bug_test = new ImageGO2D("bug_test", m_d3dDevice.Get());
@@ -300,10 +300,7 @@ void Game::Update(DX::StepTimer const& _timer)
     //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
     if (m_GD->m_KBS_tracker.pressed.Space)
     {
-        if (m_GD->m_GS == GS_MENU)
-        {
-            m_GD->m_GS = GS_PLAY_TPS_CAM;
-        }
+               m_GD->m_GS = GS_PLAY;
     }
 
     //update all objects
@@ -335,43 +332,73 @@ void Game::Render()
     }
 
     Clear();
+
+    //update the constant buffer for the rendering of VBGOs
+    VBGO::UpdateConstantBuffer(m_DD);
     
     //set immediate context of the graphics device
     m_DD->m_pd3dImmediateContext = m_d3dContext.Get();
 
     switch (m_GD->m_GS)
     {
-    case GS_MENU:
-        m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-        menuImg->Draw(m_DD2D);
+        case GS_MENU:
+            m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+            menuImg->Draw(m_DD2D);
 
-        m_DD2D->m_Sprites->End();
-        break;
+            m_DD2D->m_Sprites->End();
+            std::cout << "MENU" << endl;
+            break;
+
+        case GS_PLAY:
+
+
+            //set which camera to be used
+            m_DD->m_cam = m_cam;
+            if (m_GD->m_GS == GS_PLAY)
+            {
+                m_DD->m_cam = m_TPScam;
+            }
+
+            //Draw 3D Game Obejects
+            for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
+            {
+                (*it)->Draw(m_DD);
+            }
+
+            // Draw sprite batch stuff 
+            m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+            for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
+            {
+                (*it)->Draw(m_DD2D);
+            }
+            m_DD2D->m_Sprites->End();
+
+
+       /* case GS_PAUSE:
+
+        case GS_WIN:
+
+        case GS_LOSE:*/
     }
 
-    //set which camera to be used
-    m_DD->m_cam = m_cam;
-    if (m_GD->m_GS == GS_PLAY_TPS_CAM)
-    {
-        m_DD->m_cam = m_TPScam;
-    }
 
-    //update the constant buffer for the rendering of VBGOs
-    VBGO::UpdateConstantBuffer(m_DD);
 
-    //Draw 3D Game Obejects
-    for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
-    {
-        (*it)->Draw(m_DD);
-    }
 
-    // Draw sprite batch stuff 
-    m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
-    for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
-    {
-        (*it)->Draw(m_DD2D);
-    }
-    m_DD2D->m_Sprites->End();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
     m_d3dContext->OMSetDepthStencilState(m_states->DepthDefault(), 0);
