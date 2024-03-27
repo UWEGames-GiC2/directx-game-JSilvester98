@@ -185,6 +185,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestSound.h" />
@@ -219,6 +220,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestSound.cpp" />
     <ClCompile Include="TextGO2D.cpp" />

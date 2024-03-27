@@ -8,7 +8,6 @@
 enum GameState {
 
 	GS_MENU,
-	//GS_PLAY_TPS_CAM,
 	GS_PLAY,
 	GS_PAUSE,
 	GS_LOSE,

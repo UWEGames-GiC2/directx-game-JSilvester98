@@ -56,6 +56,9 @@ public:
 	void		SetDrag(float _drag) { m_drag = _drag; }
 	void		SetAcc(Vector3 _acc) { m_acc = _acc; }
 
+
+	bool isStar = false;
+
 protected:
 
 	//World transform/matrix of this GO and it components

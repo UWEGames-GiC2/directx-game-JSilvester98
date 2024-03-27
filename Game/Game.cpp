@@ -134,7 +134,16 @@ void Game::Initialize(HWND _window, int _width, int _height)
     cube->SetScale(20.0f, 0.001f, 20.0f);
     m_GameObjects.push_back(cube);
 
+    std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 100.0f), Vector3(200.0f, 0, 100.0f), Vector3(300.0f, 0, 100.0f), Vector3(400.0f, 0, 100.0f), Vector3(500.0f, 0, 100.0f)};
 
+    for (int i = 0; i < 5; i++)
+    {
+        std::unique_ptr<Star> star = std::make_unique<Star>("Star", m_d3dDevice.Get(), m_fxFactory, starpositions[i], 0.0f, 0.0f, 0.0f, 0.25f * Vector3::One);
+        star->isStar = true;
+        stars.push_back(std::move(star));
+    }
+
+   
 
 
     //L-system like tree
@@ -240,7 +249,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //example basic 2D stuff
     menuImg = new ImageGO2D("C++Background", m_d3dDevice.Get());
     menuImg->SetPos(Vector2(_width / 2, _height / 2));
-    m_GameObjects2D.push_back(menuImg);
+    Images.push_back(menuImg);
 
    /* ImageGO2D* bug_test = new ImageGO2D("bug_test", m_d3dDevice.Get());
     bug_test->SetPos(300.0f * Vector2::One);
@@ -278,6 +287,14 @@ void Game::Update(DX::StepTimer const& _timer)
     float elapsedTime = float(_timer.GetElapsedSeconds());
     m_GD->m_dt = elapsedTime;
 
+    ReadInput();
+            //upon space bar switch camera state
+            //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
+            if (m_GD->m_KBS_tracker.pressed.Space)
+            {
+                m_GD->m_GS = GS_PLAY;
+            }
+
     //this will update the audio engine but give us chance to do somehting else if that isn't working
     if (!m_audioEngine->Update())
     {
@@ -295,13 +312,17 @@ void Game::Update(DX::StepTimer const& _timer)
         }
     }
 
-    ReadInput();
-    //upon space bar switch camera state
-    //see docs here for what's going on: https://github.com/Microsoft/DirectXTK/wiki/Keyboard
-    if (m_GD->m_KBS_tracker.pressed.Space)
+    switch (m_GD->m_GS)
     {
-               m_GD->m_GS = GS_PLAY;
+        /*case GS_MENU:*/
+
+            
+
     }
+
+
+
+   
 
     //update all objects
     for (list<GameObject*>::iterator it = m_GameObjects.begin(); it != m_GameObjects.end(); it++)
@@ -347,7 +368,11 @@ void Game::Render()
 
             m_DD2D->m_Sprites->End();
             std::cout << "MENU" << endl;
+
+
+
             break;
+            
 
         case GS_PLAY:
 
@@ -365,6 +390,13 @@ void Game::Render()
                 (*it)->Draw(m_DD);
             }
 
+            // Render Star
+
+            for (std::vector<std::unique_ptr<Star>>::iterator it = stars.begin(); it != stars.end(); it++)
+            {
+                (*it)->Draw(m_DD);
+            }
+
             // Draw sprite batch stuff 
             m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
             for (list<GameObject2D*>::iterator it = m_GameObjects2D.begin(); it != m_GameObjects2D.end(); it++)
@@ -372,6 +404,8 @@ void Game::Render()
                 (*it)->Draw(m_DD2D);
             }
             m_DD2D->m_Sprites->End();
+
+            break;
 
 
        /* case GS_PAUSE:
@@ -687,6 +721,19 @@ void Game::CheckCollision()
             XMFLOAT3 eject_vect = Collision::ejectionCMOGO(*m_PhysicsObjects[i], *m_ColliderObjects[j]);
             auto pos = m_PhysicsObjects[i]->GetPos();
             m_PhysicsObjects[i]->SetPos(pos - eject_vect);
+
+
+        }
+
+        
+    }
+
+    for (int i = 0; i < m_PhysicsObjects.size(); i++) for (int j = 0; j < stars.size(); j++)
+    {
+        if (m_PhysicsObjects[i]->Intersects(*stars[j]))
+        {
+            stars.erase(stars.begin() + j);
+            std::cout << "100 points" << std::endl;
         }
     }
 }

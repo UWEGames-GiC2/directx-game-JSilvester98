@@ -152,6 +152,7 @@
     <MeshContentTask Include="Bird\BirdModelV1.fbx" />
     <MeshContentTask Include="Car\car.FBX" />
     <MeshContentTask Include="Road\ROAD.fbx" />
+    <MeshContentTask Include="Star\Star.fbx" />
     <MeshContentTask Include="Table\table.FBX">
       <FileType>Document</FileType>
     </MeshContentTask>

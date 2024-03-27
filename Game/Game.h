@@ -13,6 +13,7 @@
 #include "Audio.h"
 #include "CMOGO.h"
 #include "ObjectList.h"
+#include "Star.h"
 
 
 using std::list;
@@ -72,7 +73,9 @@ private:
 
 
     GameObject2D*menuImg;
+    bool menuimgshow = true;
     
+    std::vector<std::unique_ptr<Star>> stars;
 
     void OnDeviceLost();
 
@@ -113,6 +116,11 @@ private:
 
     list<GameObject*> m_GameObjects; //data structure to hold pointers to the 3D Game Objects
     list<GameObject2D*> m_GameObjects2D; //data structure to hold pointers to the 2D Game Objects 
+
+    list<GameObject2D*> Images;
+    list<GameObject*> collectibles;
+
+    
 
     //list<CMOGO*> m_CMOGameObjects; //data structure to hold pointers to all 3D CMO Game Objects
     //list<CMOGO*> m_PhysicsObjects
