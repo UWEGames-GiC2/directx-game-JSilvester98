@@ -5,5 +5,7 @@
     <ImageContentTask Include="grass.jpg" />
     <ImageContentTask Include="white.jpg" />
     <ImageContentTask Include="\\nstu-nas01.uwe.ac.uk\users2$\j2-silvester\Windows\Desktop\C++Background.png" />
+    <ImageContentTask Include="YouWin.png" />
+    <ImageContentTask Include="YouLose.png" />
   </ItemGroup>
 </Project>

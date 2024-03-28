@@ -10,7 +10,7 @@ Player::Player(string _fileName, ID3D11Device* _pd3dDevice, IEffectFactory* _EF)
 
 	m_pos.y = 10.0f;
 
-	SetDrag(0.1);
+	SetDrag(1);
 	SetPhysicsOn(true);
 }
 
@@ -25,15 +25,15 @@ void Player::Tick(GameData* _GD)
 	switch (_GD->m_GS)
 	{
 	
-	{
+		{
 		
-		//MOUSE CONTROL SCHEME HERE
-		float speed = 300.0f;
-		m_acc.x += speed * _GD->m_MS.x;
-		m_acc.z += speed * _GD->m_MS.y;
-		break;
+			//MOUSE CONTROL SCHEME HERE
+			float speed = 1000.0f;
+			m_acc.x += speed * _GD->m_MS.x;
+			m_acc.z += speed * _GD->m_MS.y;
+			break;
 		
-	}
+		}
 	case GS_PLAY:
 	{
 		//TURN AND FORWARD CONTROL HERE

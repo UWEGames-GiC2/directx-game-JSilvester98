@@ -62,6 +62,34 @@ public:
 
 private:
 
+    /////// ScoreBoard ////////
+
+    int score = 0;
+
+    void addPoints(int points)
+    {
+        score += points;
+    }
+
+    void deductPoints(int points)
+    {
+        score -= points;
+    }
+
+    int getScore()
+    {
+        return score;
+    }
+
+    ///////////////////////////
+
+    //////// Timer ////////
+
+
+
+    bool isStar = false;
+
+
     void Update(DX::StepTimer const& _timer);
     void Render();
 
@@ -73,6 +101,9 @@ private:
 
 
     GameObject2D*menuImg;
+    GameObject2D*winScreen;
+    GameObject2D*loseScreen;
+
     bool menuimgshow = true;
     
     std::vector<std::unique_ptr<Star>> stars;

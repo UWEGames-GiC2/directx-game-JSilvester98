@@ -131,7 +131,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     VBCube* cube = new VBCube();
     cube->init(11, m_d3dDevice.Get());
     cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
-    cube->SetScale(20.0f, 0.001f, 20.0f);
+    cube->SetScale(100.0f, 0.001f, 100.0f);
     m_GameObjects.push_back(cube);
 
     std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 100.0f), Vector3(200.0f, 0, 100.0f), Vector3(300.0f, 0, 100.0f), Vector3(400.0f, 0, 100.0f), Vector3(500.0f, 0, 100.0f)};
@@ -251,6 +251,14 @@ void Game::Initialize(HWND _window, int _width, int _height)
     menuImg->SetPos(Vector2(_width / 2, _height / 2));
     Images.push_back(menuImg);
 
+    winScreen = new ImageGO2D("YouWin", m_d3dDevice.Get());
+    winScreen->SetPos(Vector2(_width / 2, _height / 2));
+    Images.push_back(winScreen);
+
+    loseScreen = new ImageGO2D("YouLose", m_d3dDevice.Get());
+    loseScreen->SetPos(Vector2(_width / 2, _height / 2));
+    Images.push_back(loseScreen);
+
    /* ImageGO2D* bug_test = new ImageGO2D("bug_test", m_d3dDevice.Get());
     bug_test->SetPos(300.0f * Vector2::One);
     m_GameObjects2D.push_back(bug_test);*/
@@ -268,6 +276,9 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
     m_Sounds.push_back(TS);*/
+
+   
+
 }
 
 // Executes the basic game loop.
@@ -314,10 +325,12 @@ void Game::Update(DX::StepTimer const& _timer)
 
     switch (m_GD->m_GS)
     {
-        /*case GS_MENU:*/
+        case GS_PLAY:
 
-            
-
+            if (score == 100)
+            {
+                m_GD->m_GS = GS_WIN;
+            }
     }
 
 
@@ -407,6 +420,16 @@ void Game::Render()
 
             break;
 
+        case GS_WIN:
+
+            m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+            winScreen->Draw(m_DD2D);
+
+            m_DD2D->m_Sprites->End();
+
+
+
+            break;
 
        /* case GS_PAUSE:
 
@@ -733,7 +756,11 @@ void Game::CheckCollision()
         if (m_PhysicsObjects[i]->Intersects(*stars[j]))
         {
             stars.erase(stars.begin() + j);
-            std::cout << "100 points" << std::endl;
+            //std::cout << "100 points" << std::endl;
+            addPoints(100);
+
+            std::cout << score << std::endl;
+
         }
     }
 }
