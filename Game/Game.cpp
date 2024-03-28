@@ -264,10 +264,10 @@ void Game::Initialize(HWND _window, int _width, int _height)
     bug_test->SetPos(300.0f * Vector2::One);
     m_GameObjects2D.push_back(bug_test);*/
 
-    /*TextGO2D* text = new TextGO2D("Test Text");
+   TextGO2D* text = new TextGO2D("Test Text");
     text->SetPos(Vector2(100, 10));
     text->SetColour(Color((float*)&Colors::Yellow));
-    m_GameObjects2D.push_back(text);*/
+    m_GameObjects2D.push_back(text);
 
     //Test Sounds
     /*Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
@@ -330,7 +330,7 @@ void Game::Update(DX::StepTimer const& _timer)
     {
         case GS_PLAY:
             
-            Time -= (m_GD->m_dt * 60);
+            Time -= m_GD->m_dt;
 
             std::cout << Time << std::endl;
             
