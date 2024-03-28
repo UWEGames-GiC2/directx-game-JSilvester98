@@ -5,7 +5,8 @@
 #include "pch.h"
 #include "Game.h"
 #include <time.h>
-
+#include <chrono>
+#include <thread>
 #include <iostream>
 
 //Scarle Headers
@@ -14,7 +15,7 @@
 #include "DrawData.h"
 #include "DrawData2D.h"
 #include "ObjectList.h"
-
+#include "iostream"
 #include "CMOGO.h"
 #include <DirectXCollision.h>
 #include "Collision.h"
@@ -277,8 +278,10 @@ void Game::Initialize(HWND _window, int _width, int _height)
     TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
     m_Sounds.push_back(TS);*/
 
-   
+    
 
+
+    
 }
 
 // Executes the basic game loop.
@@ -326,11 +329,18 @@ void Game::Update(DX::StepTimer const& _timer)
     switch (m_GD->m_GS)
     {
         case GS_PLAY:
+            
+            Time -= (m_GD->m_dt * 60);
+
+            std::cout << Time << std::endl;
+            
 
             if (score == 100)
             {
                 m_GD->m_GS = GS_WIN;
             }
+
+
     }
 
 
@@ -380,7 +390,6 @@ void Game::Render()
             menuImg->Draw(m_DD2D);
 
             m_DD2D->m_Sprites->End();
-            std::cout << "MENU" << endl;
 
 
 

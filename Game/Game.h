@@ -14,6 +14,7 @@
 #include "CMOGO.h"
 #include "ObjectList.h"
 #include "Star.h"
+#include <chrono>
 
 
 using std::list;
@@ -59,6 +60,8 @@ public:
 
     // Properties
     void GetDefaultSize( int& _width, int& _height ) const noexcept;
+
+    int Time = 60;
 
 private:
 
