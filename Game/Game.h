@@ -61,13 +61,13 @@ public:
     // Properties
     void GetDefaultSize( int& _width, int& _height ) const noexcept;
 
-    int Time = 60;
-
 private:
 
     /////// ScoreBoard ////////
 
     int score = 0;
+
+    int time = 5000;
 
     void addPoints(int points)
     {
@@ -88,7 +88,8 @@ private:
 
     //////// Timer ////////
 
-
+    TextGO2D* Timer = NULL;
+    TextGO2D* ScoreCounter = NULL;
 
     bool isStar = false;
 

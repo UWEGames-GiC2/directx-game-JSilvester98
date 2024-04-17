@@ -5,9 +5,9 @@
 #include "pch.h"
 #include "Game.h"
 #include <time.h>
-#include <chrono>
 #include <thread>
 #include <iostream>
+#include <ctime>
 
 //Scarle Headers
 #include "GameData.h"
@@ -54,7 +54,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     */
 
     //seed the random number generator
-    srand((UINT)time(NULL));
+    //srand((UINT)time(NULL));
 
     //set up keyboard and mouse system
     //documentation here: https://github.com/microsoft/DirectXTK/wiki/Mouse-and-keyboard-input
@@ -144,9 +144,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
         stars.push_back(std::move(star));
     }
 
-   
-
-
+    
     //L-system like tree
    /* Tree* tree = new Tree(4, 4, .6f, 10.0f * Vector3::Up, XM_PI / 6.0f, "JEMINA vase -up", m_d3dDevice.Get(), m_fxFactory);
     m_GameObjects.push_back(tree);  */
@@ -264,10 +262,15 @@ void Game::Initialize(HWND _window, int _width, int _height)
     bug_test->SetPos(300.0f * Vector2::One);
     m_GameObjects2D.push_back(bug_test);*/
 
-   TextGO2D* text = new TextGO2D("Test Text");
-    text->SetPos(Vector2(100, 10));
-    text->SetColour(Color((float*)&Colors::Yellow));
-    m_GameObjects2D.push_back(text);
+    Timer = new TextGO2D("0");
+    Timer->SetPos(Vector2(100, 10));
+    Timer->SetColour(Color((float*)&Colors::Yellow));
+    m_GameObjects2D.push_back(Timer);
+
+    ScoreCounter = new TextGO2D("0");
+    ScoreCounter->SetPos(Vector2(650, 10));
+    ScoreCounter->SetColour(Color((float*)&Colors::Orange));
+    m_GameObjects2D.push_back(ScoreCounter);
 
     //Test Sounds
     /*Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
@@ -330,12 +333,18 @@ void Game::Update(DX::StepTimer const& _timer)
     {
         case GS_PLAY:
             
-            Time -= m_GD->m_dt;
+            time--;
 
-            std::cout << Time << std::endl;
-            
+            time -= _timer.GetElapsedSeconds();
+            Timer = new TextGO2D("Time -- " + std::to_string(time));
+            std::cout << time << std::endl;
 
-            if (score == 100)
+            ScoreCounter = new TextGO2D("Score -  " + std::to_string(score));
+
+            //std::cout << time << std::endl;
+
+
+            if (score == 500)
             {
                 m_GD->m_GS = GS_WIN;
             }
@@ -397,6 +406,7 @@ void Game::Render()
             
 
         case GS_PLAY:
+
 
 
             //set which camera to be used
