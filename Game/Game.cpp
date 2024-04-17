@@ -268,7 +268,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects2D.push_back(Timer);
 
     ScoreCounter = new TextGO2D("0");
-    ScoreCounter->SetPos(Vector2(650, 10));
+    ScoreCounter->SetPos(Vector2(550, 10));
     ScoreCounter->SetColour(Color((float*)&Colors::Orange));
     m_GameObjects2D.push_back(ScoreCounter);
 
@@ -335,13 +335,9 @@ void Game::Update(DX::StepTimer const& _timer)
             
             time--;
 
-            time -= _timer.GetElapsedSeconds();
-            Timer = new TextGO2D("Time -- " + std::to_string(time));
-            std::cout << time << std::endl;
+            Timer->SetText("Time -- " + std::to_string(time));
 
-            ScoreCounter = new TextGO2D("Score -  " + std::to_string(score));
-
-            //std::cout << time << std::endl;
+            ScoreCounter->SetText("Score -  " + std::to_string(score));
 
 
             if (score == 500)
@@ -349,6 +345,10 @@ void Game::Update(DX::StepTimer const& _timer)
                 m_GD->m_GS = GS_WIN;
             }
 
+            if (time == 0)
+            {
+                m_GD->m_GS = GS_LOSE;
+            }
 
     }
 
@@ -446,7 +446,12 @@ void Game::Render()
 
             m_DD2D->m_Sprites->End();
 
+        case GS_LOSE:
 
+            m_DD2D->m_Sprites->Begin(SpriteSortMode_Deferred, m_states->NonPremultiplied());
+            loseScreen->Draw(m_DD2D);
+
+            m_DD2D->m_Sprites->End();
 
             break;
 
