@@ -67,7 +67,7 @@ private:
 
     int score = 0;
 
-    int time = 100;
+    int time = 5000;
 
     void addPoints(int points)
     {

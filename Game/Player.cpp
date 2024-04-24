@@ -48,30 +48,32 @@ void Player::Tick(GameData* _GD)
 		{
 			m_acc -= forwardMove;
 		}
+
+
+		//change orinetation of player
+		float rotSpeed = 2.0f * _GD->m_dt;
+		if (_GD->m_KBS.A)
+		{
+			m_yaw += rotSpeed;
+		}
+		if (_GD->m_KBS.D)
+		{
+			m_yaw -= rotSpeed;
+		}
+
+
+		if (_GD->m_MS.x > 0.5)
+		{
+			m_yaw -= rotSpeed;
+		}
+
+		if (_GD->m_MS.x < -0.5)
+		{
+			m_yaw += rotSpeed;
+		}
+
 		break;
 	}
-	}
-
-	//change orinetation of player
-	float rotSpeed = 2.0f * _GD->m_dt;
-	if (_GD->m_KBS.A)
-	{
-		m_yaw += rotSpeed;
-	}
-	if (_GD->m_KBS.D)
-	{
-		m_yaw -= rotSpeed;
-	}
-
-	//move player up and down
-	if (_GD->m_KBS.R)
-	{
-		m_acc.y += 40.0f;
-	}
-
-	if (_GD->m_KBS.F)
-	{
-		m_acc.y -= 40.0f;
 	}
 
 	//limit motion of the player

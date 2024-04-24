@@ -46,16 +46,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
 
     CreateResources();
 
-    // TODO: Change the timer settings if you want something other than the default variable timestep mode.
-    // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
-    m_timer.SetFixedTimeStep(true);
-    m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
-
-    //seed the random number generator
-    //srand((UINT)time(NULL));
-
     //set up keyboard and mouse system
     //documentation here: https://github.com/microsoft/DirectXTK/wiki/Mouse-and-keyboard-input
     m_keyboard = std::make_unique<Keyboard>();
@@ -98,21 +88,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     //find how big my window is to correctly calculate my aspect ratio
     float AR = (float)_width / (float)_height;
 
-    //example basic 3D stuff
-    /*Terrain* terrain = new Terrain("table", m_d3dDevice.Get(), m_fxFactory, Vector3(100.0f, 0.0f, 100.0f), 0.0f, 0.0f, 0.0f, 0.25f * Vector3::One);
-    m_GameObjects.push_back(terrain);
-    m_ColliderObjects.push_back(terrain);*/
-
-    /*Terrain* terrain2 = new Terrain("ROAD", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, Vector3::One);
-    m_GameObjects.push_back(terrain2);
-    m_ColliderObjects.push_back(terrain2);
-    terrain2->SetScale(0.1f);*/
-    
-    /*FileVBGO* Box = new FileVBGO("cube", m_d3dDevice.Get());
-    m_GameObjects.push_back(Box);
-    Box->SetPos(Vector3(0.0f, 0.0f, -100.0f));
-    Box->SetScale(1.0f, 20.0f, 20.0f);*/
-
     //add Player
     Player* pPlayer = new Player("car", m_d3dDevice.Get(), m_fxFactory);
     m_GameObjects.push_back(pPlayer);
@@ -129,11 +104,43 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, -10.0f));
     m_GameObjects.push_back(m_TPScam);
 
-    VBCube* cube = new VBCube();
-    cube->init(11, m_d3dDevice.Get());
-    cube->SetPos(Vector3(100.0f, 0.0f, 0.0f));
-    cube->SetScale(100.0f, 0.001f, 100.0f);
-    m_GameObjects.push_back(cube);
+    VBCube* floor = new VBCube();
+    floor->init(11, m_d3dDevice.Get());
+    floor->SetPos(Vector3(200.0f, 0.0f, 0.0f));
+    floor->SetScale(100.0f, 0.001f, 100.0f);
+    m_GameObjects.push_back(floor);
+
+    
+    VBCube* wall0 = new VBCube();
+    wall0->init(11, m_d3dDevice.Get());
+    wall0->SetPos(Vector3(0.0f, 0.0f, 500.0f));
+    wall0->SetScale(100.0f, 0.001f, 100.0f);
+    wall0->SetPitch(XMConvertToRadians(90));
+    m_GameObjects.push_back(wall0);
+
+    VBCube* wall1 = new VBCube();
+    wall1->init(11, m_d3dDevice.Get());
+    wall1->SetPos(Vector3(0.0f, 0.0f, -500.0f));
+    wall1->SetScale(100.0f, 0.001f, 100.0f);
+    wall1->SetPitch(XMConvertToRadians(90));
+    m_GameObjects.push_back(wall1);
+    
+    VBCube* wall2 = new VBCube();
+    wall2->init(11, m_d3dDevice.Get());
+    wall2->SetPos(Vector3(500.0f, 0.0f, 0.0f));
+    wall2->SetScale(100.0f, 0.001f, 100.0f);
+    wall2->SetPitch(XMConvertToRadians(90));
+    wall2->SetYaw(XMConvertToRadians(90));
+    m_GameObjects.push_back(wall2);
+
+    VBCube* wall3 = new VBCube();
+    wall3->init(11, m_d3dDevice.Get());
+    wall3->SetPos(Vector3(-500.0f, 0.0f, 0.0f));
+    wall3->SetScale(100.0f, 0.001f, 100.0f);
+    wall3->SetPitch(XMConvertToRadians(90));
+    wall3->SetYaw(XMConvertToRadians(90));
+    m_GameObjects.push_back(wall3);
+        
 
     std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 100.0f), Vector3(200.0f, 0, 100.0f), Vector3(300.0f, 0, 100.0f), Vector3(400.0f, 0, 100.0f), Vector3(500.0f, 0, 100.0f)};
 
@@ -143,100 +150,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
         star->isStar = true;
         stars.push_back(std::move(star));
     }
-
-    
-    //L-system like tree
-   /* Tree* tree = new Tree(4, 4, .6f, 10.0f * Vector3::Up, XM_PI / 6.0f, "JEMINA vase -up", m_d3dDevice.Get(), m_fxFactory);
-    m_GameObjects.push_back(tree);  */
-    // todo: add to cmogo
-
-    //Vertex Buffer Game Objects
-    //FileVBGO* terrainBox = new FileVBGO("terrainTex", m_d3dDevice.Get());
-    //m_GameObjects.push_back(terrainBox);
-
-
-    //VBSpike* spikes = new VBSpike();
-    //spikes->init(11, m_d3dDevice.Get());
-    //spikes->SetPos(Vector3(0.0f, 0.0f, 100.0f));
-    //spikes->SetScale(4.0f);
-    //m_GameObjects.push_back(spikes);
-
-    //VBSpiral* spiral = new VBSpiral();
-    //spiral->init(11, m_d3dDevice.Get());
-    //spiral->SetPos(Vector3(-100.0f, 0.0f, 0.0f));
-    //spiral->SetScale(4.0f);
-    //m_GameObjects.push_back(spiral);
-
-    //VBPillow* pillow = new VBPillow();
-    //pillow->init(11, m_d3dDevice.Get());
-    //pillow->SetPos(Vector3(-100.0f, 0.0f, -100.0f));
-    //pillow->SetScale(4.0f);
-    //m_GameObjects.push_back(pillow);
-
-    //VBSnail* snail = new VBSnail(m_d3dDevice.Get(), "shell", 150, 0.98f, 0.09f * XM_PI, 0.4f, Color(1.0f, 0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 1.0f, 1.0f));
-    //snail->SetPos(Vector3(-100.0f, 0.0f, 100.0f));
-    //snail->SetScale(2.0f);
-    //m_GameObjects.push_back(snail);
-
-    ////Marching Cubes
-    //VBMarchCubes* VBMC = new VBMarchCubes();
-    //VBMC->init(Vector3(-8.0f, -8.0f, -17.0f), Vector3(8.0f, 8.0f, 23.0f), 60.0f * Vector3::One, 0.01, m_d3dDevice.Get());
-    //VBMC->SetPos(Vector3(100, 0, -100));
-    //VBMC->SetPitch(-XM_PIDIV2);
-    //VBMC->SetScale(Vector3(3, 3, 1.5));
-    //m_GameObjects.push_back(VBMC);
-
-
-    //test all GPGOs
-    /*float* params = new float[3];
-    params[0] = 10.f;  params[1] = 20.0f; params[2] = 30.f;
-    GPGO* pGPGO = new GPGO(m_d3dContext.Get(), GPGO_BOX, (float*)&Colors::Azure, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, -100.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = params[1] = 20.0f; params[2] = (size_t)32;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_CONE, (float*)&Colors::Navy,params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, -70.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 15.0f;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_CUBE, (float*)&Colors::SeaGreen, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, -40.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = params[1] = 20.0f; params[2] = (size_t)32;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_CYLINDER, (float*)&Colors::OliveDrab, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, -10.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 15.0f;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_DODECAHEDRON, (float*)&Colors::OrangeRed,params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 20.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] =  15.0f; params[1] = (size_t)3;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_GEOSPHERE, (float*)&Colors::BlueViolet, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 50.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 20;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_ICOSAHEDRON, (float*)&Colors::DodgerBlue, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 80.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 20;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_OCTAHEDRON, (float*)&Colors::PaleTurquoise, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 110.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 15.0f; params[1] = (size_t)16;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_SPHERE, (float*)&Colors::LawnGreen, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 140.0));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 15.0f; params[1] = (size_t)8;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_TEAPOT, (float*)&Colors::YellowGreen, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 170.0f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 20;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_TETRAHEDRON, (float*)&Colors::Firebrick, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 200.f));
-    m_GameObjects.push_back(pGPGO);
-    params[0] = 30.0f; params[1] = 10.0f; params[2] = (size_t)32;
-    pGPGO = new GPGO(m_d3dContext.Get(), GPGO_TORUS, (float*)&Colors::Aquamarine, params);
-    pGPGO->SetPos(Vector3(-50.0f, 10.0f, 230.f));
-    m_GameObjects.push_back(pGPGO);*/
 
     //create DrawData struct and populate its pointers
     m_DD = new DrawData;
@@ -270,21 +183,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     ScoreCounter = new TextGO2D("0");
     ScoreCounter->SetPos(Vector2(550, 10));
     ScoreCounter->SetColour(Color((float*)&Colors::Orange));
-    m_GameObjects2D.push_back(ScoreCounter);
-
-    //Test Sounds
-    /*Loop* loop = new Loop(m_audioEngine.get(), "NightAmbienceSimple_02");
-    loop->SetVolume(0.1f);
-    loop->Play();
-    m_Sounds.push_back(loop);
-
-    TestSound* TS = new TestSound(m_audioEngine.get(), "Explo1");
-    m_Sounds.push_back(TS);*/
-
-    
-
-
-    
+    m_GameObjects2D.push_back(ScoreCounter);    
 }
 
 // Executes the basic game loop.
@@ -339,6 +238,7 @@ void Game::Update(DX::StepTimer const& _timer)
 
             ScoreCounter->SetText("Score -  " + std::to_string(score));
 
+            
 
             if (score == 500)
             {
@@ -349,6 +249,8 @@ void Game::Update(DX::StepTimer const& _timer)
             {
                 m_GD->m_GS = GS_LOSE;
             }
+
+            
 
     }
 
@@ -445,6 +347,8 @@ void Game::Render()
             winScreen->Draw(m_DD2D);
 
             m_DD2D->m_Sprites->End();
+
+            break;
 
         case GS_LOSE:
 
@@ -749,6 +653,11 @@ void Game::ReadInput()
     if (m_GD->m_KBS.Escape)
     {
         ExitGame();
+    }
+
+    if (m_GD->m_KBS.P)
+    {
+        m_GD->m_GS = GS_WIN;
     }
 
     m_GD->m_MS = m_mouse->GetState();
