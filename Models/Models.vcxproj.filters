@@ -24,6 +24,8 @@
     <MeshContentTask Include="Car\car.FBX" />
     <MeshContentTask Include="Star\Star.fbx" />
     <MeshContentTask Include="Wall\Wall.fbx" />
-    <MeshContentTask Include="Arena\Arena.fbx" />
+    <MeshContentTask Include="Arena\Floor01.fbx" />
+    <MeshContentTask Include="Arena\House01.fbx" />
+    <MeshContentTask Include="Arena\House02.fbx" />
   </ItemGroup>
 </Project>

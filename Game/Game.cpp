@@ -141,10 +141,21 @@ void Game::Initialize(HWND _window, int _width, int _height)
     wall3->SetYaw(XMConvertToRadians(90));
     m_GameObjects.push_back(wall3);*/
 
-    Terrain* Arena = new Terrain("Arena", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 500.0f), 0.0f, 0.0f, 0.0f, 0.25f * Vector3::One);
-        
+    Terrain* Floor = new Terrain("Floor01", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 5.0f * Vector3::One);
+    m_GameObjects.push_back(Floor);
+    m_ColliderObjects.push_back(Floor);
 
-    std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 100.0f), Vector3(200.0f, 0, 100.0f), Vector3(300.0f, 0, 100.0f), Vector3(400.0f, 0, 100.0f), Vector3(500.0f, 0, 100.0f)};
+
+    Terrain* House1 = new Terrain("House01", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 5.0f * Vector3::One);
+    m_GameObjects.push_back(House1);
+    m_ColliderObjects.push_back(House1);
+
+
+    Terrain* House2 = new Terrain("House02", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 5.0f * Vector3::One);
+    m_GameObjects.push_back(House2);
+    m_ColliderObjects.push_back(House2);
+
+    std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 0.0f), Vector3(200.0f, 0, 0.0f), Vector3(300.0f, 0, 0.0f), Vector3(400.0f, 0, 0.0f), Vector3(500.0f, 0, 0.0f)};
 
     for (int i = 0; i < 5; i++)
     {
