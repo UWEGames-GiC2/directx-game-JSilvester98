@@ -110,37 +110,6 @@ void Game::Initialize(HWND _window, int _width, int _height)
     floor->SetScale(100.0f, 0.001f, 100.0f);
     m_GameObjects.push_back(floor);
 
-    
-    /*VBCube* wall0 = new VBCube();
-    wall0->init(11, m_d3dDevice.Get());
-    wall0->SetPos(Vector3(0.0f, 0.0f, 500.0f));
-    wall0->SetScale(100.0f, 0.001f, 100.0f);
-    wall0->SetPitch(XMConvertToRadians(90));
-    m_GameObjects.push_back(wall0);
-
-    VBCube* wall1 = new VBCube();
-    wall1->init(11, m_d3dDevice.Get());
-    wall1->SetPos(Vector3(0.0f, 0.0f, -500.0f));
-    wall1->SetScale(100.0f, 0.001f, 100.0f);
-    wall1->SetPitch(XMConvertToRadians(90));
-    m_GameObjects.push_back(wall1);
-    
-    VBCube* wall2 = new VBCube();
-    wall2->init(11, m_d3dDevice.Get());
-    wall2->SetPos(Vector3(500.0f, 0.0f, 0.0f));
-    wall2->SetScale(100.0f, 0.001f, 100.0f);
-    wall2->SetPitch(XMConvertToRadians(90));
-    wall2->SetYaw(XMConvertToRadians(90));
-    m_GameObjects.push_back(wall2);
-
-    VBCube* wall3 = new VBCube();
-    wall3->init(11, m_d3dDevice.Get());
-    wall3->SetPos(Vector3(-500.0f, 0.0f, 0.0f));
-    wall3->SetScale(100.0f, 0.001f, 100.0f);
-    wall3->SetPitch(XMConvertToRadians(90));
-    wall3->SetYaw(XMConvertToRadians(90));
-    m_GameObjects.push_back(wall3);*/
-
     Terrain* Floor = new Terrain("Floor01", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 5.0f * Vector3::One);
     m_GameObjects.push_back(Floor);
     m_ColliderObjects.push_back(Floor);
@@ -378,25 +347,6 @@ void Game::Render()
 
         case GS_LOSE:*/
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //drawing text screws up the Depth Stencil State, this puts it back again!
     m_d3dContext->OMSetDepthStencilState(m_states->DepthDefault(), 0);
