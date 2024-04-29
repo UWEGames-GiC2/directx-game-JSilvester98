@@ -101,7 +101,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(m_cam);
 
     //add a secondary camera
-    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, -10.0f));
+    m_TPScam = new TPSCamera(0.25f * XM_PI, AR, 1.0f, 10000.0f, pPlayer, Vector3::UnitY, Vector3(0.0f, 20.0f, 0.0f));
     m_GameObjects.push_back(m_TPScam);
 
     VBCube* floor = new VBCube();
@@ -111,7 +111,7 @@ void Game::Initialize(HWND _window, int _width, int _height)
     m_GameObjects.push_back(floor);
 
     
-    VBCube* wall0 = new VBCube();
+    /*VBCube* wall0 = new VBCube();
     wall0->init(11, m_d3dDevice.Get());
     wall0->SetPos(Vector3(0.0f, 0.0f, 500.0f));
     wall0->SetScale(100.0f, 0.001f, 100.0f);
@@ -139,7 +139,9 @@ void Game::Initialize(HWND _window, int _width, int _height)
     wall3->SetScale(100.0f, 0.001f, 100.0f);
     wall3->SetPitch(XMConvertToRadians(90));
     wall3->SetYaw(XMConvertToRadians(90));
-    m_GameObjects.push_back(wall3);
+    m_GameObjects.push_back(wall3);*/
+
+    Terrain* Arena = new Terrain("Arena", m_d3dDevice.Get(), m_fxFactory, Vector3(0.0f, 0.0f, 500.0f), 0.0f, 0.0f, 0.0f, 0.25f * Vector3::One);
         
 
     std::vector<Vector3> starpositions = { Vector3(100.0f, 0, 100.0f), Vector3(200.0f, 0, 100.0f), Vector3(300.0f, 0, 100.0f), Vector3(400.0f, 0, 100.0f), Vector3(500.0f, 0, 100.0f)};
